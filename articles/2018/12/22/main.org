@@ -1,0 +1,7 @@
+#+BLOG: wordpress
+#+POSTID: 70
+#+DATE: [2018-12-22 土 19:15]
+#+TITLE: Emacsによる投稿
+
+* Org2Brogで投稿
+この投稿はEmacsで記述している。この後何回かは試験的な投稿が続く。
