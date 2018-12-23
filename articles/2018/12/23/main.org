@@ -1,0 +1,8 @@
+#+BLOG: wordpress
+#+POSTID: 76
+#+DATE: [2018-12-23 日 15:14]
+#+TITLE: jupyter notebook on gist
+
+* jupyter notebook を投稿
+
+#+HTML: <script src="https://gist.github.com/k-sunako/9a92a9273d838ae86a2d97ca94400c05.js"></script>
