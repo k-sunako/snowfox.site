@@ -1,0 +1,22 @@
+#+BLOG: wordpress
+#+POSTID: 88
+#+DATE: [2018-12-24 月 20:02]
+#+TITLE: 読んだ記事
+
+* 記事
+** [[https://medium.com/i-math/simplifying-factorials-the-easy-way-61c221c21b57][Simplifying Factorials: The Easy Way]]
+   階乗の説明をしている記事。この位は英語を書けるようになりたい。
+
+   ${}_{x}C_{2}$ の単純にした結果がなるちょっと気になった。
+
+   久々に[[https://cocalc.com/][CoCalc]]に接続し、階乗を計算してみた。(Exportしたら結果が見えない。)
+   #+HTML: <script src="https://gist.github.com/k-sunako/cceb3749180f4ea2ffc1731a8fbe9054.js"></script>
+
+** [[https://medium.com/chingu/learning-by-cloning-how-to-decompose-the-problem-102f838a3b19][Learning by Cloning: How to Decompose the Problem]]
+   Web開発の学習に関する記事。
+
+   サイトを模倣(クローン)することが学習になる。所謂、写経？
+   
+** [[https://medium.com/wolfram-developers/modernizing-math-typesetting-with-svg-8d82ca606b9a][Modernizing Math Typesetting with SVG]]
+   いまいち理解できなかった。
+   

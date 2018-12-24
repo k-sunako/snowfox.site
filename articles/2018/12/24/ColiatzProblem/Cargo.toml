@@ -1,0 +1,6 @@
+[package]
+name = "ColiatzProblem"
+version = "0.1.0"
+authors = ["snowfox <dd.kazumasa@gmail.com>"]
+
+[dependencies]

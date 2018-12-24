@@ -1,0 +1,28 @@
+#+BLOG: wordpress
+#+POSTID: 80
+#+DATE: [2018-12-24 月 04:44]
+#+TITLE: コラッツの問題
+
+* 定義
+  $$f(n) = 
+  \begin{cases}
+  n / 2 & \text{if $n \equiv 0$} \\
+  3 n + 1 & \text{if $n \equiv 1$}
+  \end{cases}$$
+
+* Rustでの実装
+  #+BEGIN_SRC rust
+    fn coliatz(mut n: u64) {
+
+        while n != 1 {
+            println!("{}", n);
+            if n % 2 == 0 {
+                n = n / 2;
+            } else {
+                n = 3 * n + 1;
+            }
+        }
+
+        println!("{}", n);
+    }
+  #+END_SRC
