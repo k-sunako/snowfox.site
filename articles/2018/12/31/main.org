@@ -1,0 +1,13 @@
+#+BLOG: wordpress
+#+POSTID: 108
+#+DATE: [2018-12-31 月 16:32]
+#+TITLE: Emacsでタスク管理 Doneを表示
+
+* Agendaのカスタマイズ
+
+下記のようにelispを記述し実行することで2018年12月の完了したタスクを一覧にできる。
+
+#+BEGIN_SRC emacs-lisp
+  (org-tags-view nil "+TODO=\"DONE\"+CLOSED>=\"[2018-12-01]\"+CLOSED<=\"[2018-12-31]\"")
+#+END_SRC
+
