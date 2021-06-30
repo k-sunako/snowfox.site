@@ -1,0 +1,7 @@
+#+BLOG: wordpress
+#+POSTID: 70
+#+DATE: [2020-02-29 土]
+#+TITLE: test
+
+* test
+  test

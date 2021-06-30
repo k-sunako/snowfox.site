@@ -1,0 +1,11 @@
+#+BLOG: wordpress
+#+POSTID: 120
+#+BLOG: wordpress
+#+DATE: [2020-03-01 日]
+#+TITLE: 組合せと順列の関係
+
+プログラミングのオンラインジャッジで偶に組合せの問題が出てくる。
+
+$$
+P_n = {}_{n-1}C_1 \cdot {}_{n-2}C_1 \cdot \ldots \cdot {}_1C_1 = n!
+$$

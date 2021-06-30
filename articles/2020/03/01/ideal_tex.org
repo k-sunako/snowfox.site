@@ -1,0 +1,18 @@
+#+BLOG: wordpress
+#+POSTID: 122
+#+BLOG: wordpress
+#+DATE: [2020-03-01 日]
+#+TITLE: イデアルの"I"
+
+数学の講義中にイデアルの飾り文字がうまく書けない。latexで出力できるかをチェック。
+
+$$
+\mathscr{A} / \mathscr{I} :=  \{a + \mathscr{I}: a \in \mathscr{A} \}
+$$
+
+
+
+$$
+ a  + \mathscr{I} = b + \mathscr{I} \Longleftrightarrow b - a \in \mathscr{I}
+$$
+

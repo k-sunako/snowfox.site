@@ -1,0 +1,81 @@
+#+BLOG: wordpress
+#+POSTID: 131
+#+DATE: [2020-07-05 日 12:01]
+#+TITLE: org-mode エクスポートの設定
+
+org-mode の設定を変更。エクスポートをスニペットとしていたが、
+~#+SETUPFILE~ を使用してLatexヘッダー等を別ファイルとする。
+
+元のスニペットは下記.
+
+#+begin_src org
+  ,#+LaTeX_CLASS: koma-jarticle
+  ,#+LaTeX_CLASS_OPTIONS: [12pt]
+
+  ,#+latex_header: \usepackage{xcolor}
+  ,#+latex_header: \usepackage{minted}
+
+  ,#+LATEX_HEADER: \usepackage{geometry}
+  ,#+LATEX_HEADER: \geometry{left=1cm,right=1cm,top=1cm,bottom=1cm}
+  ,#+LATEX_HEADER: \usepackage[natbib=true]{biblatex} \DeclareFieldFormat{apacase}{#1} \addbibresource{~/Dropbox/Bibliography/references.bib}
+  ,#+STARTUP:  overview
+  ,#+STARTUP:  hidestars
+  ,#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+  ,#+LINK_UP:
+  ,#+LINK_HOME:
+
+  ,#+TITLE: ${1: title}
+  ,#+AUTHOR: k-sunako
+  ,#+DATE: `(let ((x (org-time-stamp '(16) t ))))`
+  \vspace*{-1.5cm}
+
+  ,* 概要
+    blabla
+
+  ,* 参考文献
+
+    ,#+LaTeX: \printbibliography[heading=none]
+#+end_src
+
+上記のLatexヘッダーなどレポートとしての体裁を設定する箇所を
+~report-header.org~ として別ファイルにする。
+
+#+CAPTION: report-header.org
+#+begin_src org
+  ,#+LaTeX_CLASS: koma-jarticle
+  ,#+LaTeX_CLASS_OPTIONS: [12pt]
+
+  ,#+latex_header: \usepackage{xcolor}
+  ,#+latex_header: \usepackage{minted}
+
+  ,#+LATEX_HEADER: \usepackage{geometry}
+  ,#+LATEX_HEADER: \geometry{left=1cm,right=1cm,top=1cm,bottom=1cm}
+  ,#+LATEX_HEADER: \usepackage[natbib=true]{biblatex} \DeclareFieldFormat{apacase}{#1} \addbibresource{~/Dropbox/Bibliography/references.bib}
+  ,#+STARTUP:  overview
+  ,#+STARTUP:  hidestars
+  ,#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+  ,#+LINK_UP:
+  ,#+LINK_HOME:
+#+end_src
+
+そのため、スニペットは下記となる。
+
+#+begin_src org
+  # -*- mode: snippet -*-
+  # name: report2
+  # key: rep2
+  # --
+  ,#+setup: report-header.org
+
+  ,#+TITLE: ${1: title}
+  ,#+AUTHOR: k-sunako
+  ,#+DATE: `(let ((x (org-time-stamp '(16) t ))))`
+  \vspace*{-1.5cm}
+
+  ,* 概要
+    blabla
+
+  ,* 参考文献
+
+    ,#+LaTeX: \printbibliography[heading=none]
+#+end_src

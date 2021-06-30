@@ -1,0 +1,15 @@
+#+BLOG: wordpress
+#+POSTID: 159
+#+DATE: [2021-06-24 木 20:07]
+#+TITLE: 羃零根基とJacobson根基
+
+  アティアの本の演習問題に取り組んでいる。
+  
+  + Atiyah, M. F., & Macdonald, I. G., Introduction to commutative
+    algebra (addison-wesley series in mathematics) (1969), : Westview Press
+
+  
+  羃零根基(nilradical)が$\mathfrak{N}$ で Jacobson根基(Jacobson
+  radical)が $\mathfrak{R}$ であるのだが、上記の本は古いのでどうにも判
+  別が難しい。。。
+

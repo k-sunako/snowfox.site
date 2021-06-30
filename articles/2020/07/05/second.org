@@ -1,0 +1,18 @@
+#+BLOG: wordpress
+#+POSTID: 133
+#+DATE: [2020-07-05 日 15:17]
+#+TITLE: ob-pytion test
+
+#+begin_src ipython :session : :results raw :exports code
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4]
+plt.plot(x)
+#+end_src
+
+#+RESULTS:
+# Out[3]:
+: [<matplotlib.lines.Line2D at 0x7fc16fbc80d0>]
+[[file:./obipy-resources/ZUmmN5.png]]
+
+
+# ./obipy-resources/ZUmmN5.png https://snowfox.site/wp-content/uploads/2020/07/ZUmmN5.png

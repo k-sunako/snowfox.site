@@ -1,0 +1,19 @@
+#+BLOG: wordpress
+#+POSTID: 129
+#+DATE: [2020-07-04 土 11:46]
+#+TITLE: ripgripのオプション
+
+emacsの ~ripgrep-regex~ コマンドが遅いことが多いので調べると検索結果の文字数に上限を設け
+れば良いらしい。
+
+下記のコマンドで100バイトの文字数に上限を設定できる。
+
+#+begin_src shell
+rp -M 100 blahblah . 
+#+end_src
+
+emacsの ~ripgrep-regex~ コマンドに反映するために下記の設定を追加した。
+
+#+begin_src elisp
+(setq ripgrep-arguments '("-M 100"))
+#+end_src

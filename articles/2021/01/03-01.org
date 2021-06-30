@@ -1,0 +1,89 @@
+#+BLOG: wordpress
+#+POSTID: 145
+#+DATE: [2021-01-03 日 20:50]
+#+TITLE: emacs-lisp のリスト操作
+
+* 概要
+  [[https://www.emacswiki.org/emacs/ListModification#h5o-8][List Modification]] にある知らなかった関数。
+
+* ~delete~ 関数
+  指定した値をリストから削除した新しいリストを返す。元になったリストは
+  破壊される。
+  
+  #+begin_src emacs-lisp
+    (setq l01 '(1 2 3))
+    (delete 1 l01)
+  #+end_src
+
+  #+RESULTS:
+  | 2 | 3 |
+
+  重複も削除する。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 1 2 3 1 1))
+    (delete 1 l01)
+  #+end_src
+
+  #+RESULTS:
+  | 2 | 3 |
+
+  元のリストは破壊される。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 1 2 3 1 1))
+    (delete 1 l01)
+    l01
+  #+end_src
+
+  #+RESULTS:
+  | 1 | 1 | 2 | 3 |
+
+
+* ~remove~ 関数
+  元のリストから指定した値を削除する。元になったリストは無事。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 2 3))
+    (remove 1 l01)
+  #+end_src
+
+  #+RESULTS:
+  | 1 | 2 | 3 |
+
+  元のリストは無事。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 1 2 3 1 1))
+    (remove 1 l01)
+    l01
+  #+end_src
+
+  #+RESULTS:
+  | 1 | 1 | 2 | 3 | 1 | 1 |
+
+
+* ~append~ 関数
+  2つのリストを連結したリストを返す。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 2 3))
+    (setq l02 '(4 5 6))
+
+    (append l01 l02)
+  #+end_src
+
+  #+RESULTS:
+  | 1 | 2 | 3 | 4 | 5 | 6 |
+
+* ~butlast~ 関数
+  指定した個数の要素をリストから除外したリストを返却する。
+
+  #+begin_src emacs-lisp
+    (setq l01 '(1 2 3 4 5))
+    (butlast l01 3)
+  #+end_src
+
+  #+RESULTS:
+  | 1 | 2 |
+  

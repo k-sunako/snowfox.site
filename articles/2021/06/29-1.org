@@ -1,0 +1,17 @@
+#+BLOG: wordpress
+#+POSTID: 181
+#+DATE: [2021-06-29 火 20:58]
+#+TITLE: org2blogの投稿時の挙動について
+
+emacsでこのブログの記事を書いて、投稿するときに
+~org2blog-buffer-post-save~ 関数を実行している。このときに emacs の画
+面が上下に分割されるため困っていたら解決策が公式の Issue にあった。
+
+1. [[https://github.com/org2blog/org2blog/issues/193][emacs window splits on posting · Issue #193 · org2blog/org2blog]]
+
+下記のように ~org-export-show-temporary-export-buffer~ を設定すれば大
+丈夫。
+
+#+begin_src elisp
+  (setq org-export-show-temporary-export-buffer nil)
+#+end_src

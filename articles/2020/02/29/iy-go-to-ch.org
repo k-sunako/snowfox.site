@@ -1,0 +1,16 @@
+#+BLOG: wordpress
+#+POSTID: 118
+#+BLOG: wordpress
+#+DATE: [2020-02-29 土]
+#+TITLE: iy-go-to-char
+
+マルチカーソルでカンマ(,)まで進みたいとかに便利
+
+#+begin_src elisp
+    (use-package iy-go-to-char
+      :ensure t
+      :after multiple-cursors
+      :bind (("C-c f" . iy-go-to-char) ("C-c F" . iy-go-to-char-backward))
+      :config
+      (add-to-list 'mc/cursor-specific-vars 'iy-go-to-char-start-pos))
+#+end_src

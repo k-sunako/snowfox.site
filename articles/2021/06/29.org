@@ -1,0 +1,31 @@
+#+BLOG: wordpress
+#+POSTID: 175
+#+DATE: [2021-06-29 火 20:41]
+#+TITLE: Emacs のエクスポート時の日本語に混ざる空白について
+
+
+このブログはorg2blogで書いているが、どうにも日本語に変な空白が混ざると
+きがあった。調べると同一の現象を解決しているする方法が2つあった。
+
+1. [[http://fjyuu.info/blog/remove-japanese-spaces][org-modeが出力するHTMLから余分な改行を削除する]]
+1. [[https://qiita.com/kawabata@github/items/1b56ec8284942ff2646b][org-mode で日本語LaTeXを出力する方法 - Qiita]]
+
+一つ目の方法は perl スクリプトがいることや少し古めの記事であったため、
+二つ目の方法を採用することにした。
+
+記事のままであるが、下記にその elisp を転載する。
+
+#+begin_src elisp
+  (defun remove-org-newlines-at-cjk-text (&optional _mode)
+    "先頭が '*', '#', '|' でなく、改行の前後が日本の文字の場合はその改行を除去する。"
+    (interactive)
+    (goto-char (point-min))
+    (while (re-search-forward "^\\([^|#*\n].+\\)\\(.\\)\n *\\(.\\)" nil t)
+      (if (and (> (string-to-char (match-string 2)) #x2000)
+               (> (string-to-char (match-string 3)) #x2000))
+          (replace-match "\\1\\2\\3"))
+      (goto-char (point-at-bol))))
+
+  (with-eval-after-load "ox"
+    (add-hook 'org-export-before-processing-hook 'remove-org-newlines-at-cjk-text))
+#+end_src

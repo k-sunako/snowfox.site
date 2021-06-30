@@ -1,0 +1,6 @@
+#+BLOG: wordpress
+#+POSTID: 150
+#+DATE: [2021-06-22 火 20:25]
+#+TITLE: ヘンテコ関数 雑記帳 悪魔の階段
+
+#+HTML: <script src="https://gist.github.com/k-sunako/7e3e2382fb4c30cd8f9b981f54f8eaf5.js"></script>

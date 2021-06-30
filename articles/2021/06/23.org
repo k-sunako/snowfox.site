@@ -1,0 +1,9 @@
+#+BLOG: wordpress
+#+POSTID: 153
+#+DATE: [2021-06-23 水 20:06]
+#+TITLE: ヘンテコ関数 雑記帳 昆虫と悪戯書き
+
+下記書籍の4章の曲線を描いてみました。
++ [[https://www.kyoritsu-pub.co.jp/bookdetail/9784320114463][ヘンテコ関数雑記帳 ―解析学へ誘う隠れた名優たち― / 佐々木 浩宣　著 | 共立出版]]
+
+#+HTML: <script src="https://gist.github.com/k-sunako/da668dd0e585aeac2721a55b3332b0c9.js"></script>

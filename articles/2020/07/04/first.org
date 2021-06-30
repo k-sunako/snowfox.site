@@ -1,0 +1,5 @@
+#+BLOG: wordpress
+#+POSTID: 127
+#+DATE: [2020-07-04 土 11:20]
+#+TITLE: test
+

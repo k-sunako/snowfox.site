@@ -1,0 +1,7 @@
+#+BLOG: wordpress
+#+POSTID: 147
+#+DATE: [2021-06-21 月 19:55]
+#+BLOG: wordpress
+#+TITLE: ヘンテコ関数 雑記帳 高木の関数
+
+#+HTML: <script src="https://gist.github.com/k-sunako/36c9ab1b6cd106bb24a4520842c412ca.js"></script>

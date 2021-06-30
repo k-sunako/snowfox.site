@@ -1,0 +1,34 @@
+#+BLOG: wordpress
+#+POSTID: 162
+#+DATE: [2021-06-28 月 19:01]
+#+TITLE: Jacobson根基 についての命題 1.9
+
+アティアの本の演習問題に取り組んでいる。
+  
++ Atiyah, M. F., & Macdonald, I. G., Introduction to commutative
+  algebra (addison-wesley series in mathematics) (1969), : Westview Press
+
+
+命題1.9 は Jacobson根基についてであり下記のような命題である。
+
+#+begin_quote
+$x \in \mathfrak{R} \Leftrightarrow 1 - xy$ is a unit in $\mathit{A}$ for all
+$y \in \mathit{A}$
+#+end_quote
+
+命題は元 $x$ がJacobson根基に含まれるならば、 $\mathit{A}$ の元 $y$ に
+対して $1-xy$ が単元になることを主張している。また、 $1-xy$ が単元であ
+れば $x$ はJacobson根基であるとも主張している。
+  
+この命題( $\Rightarrow$ )の証明を自分なりに理解したのでここに書く。
+
+背理法を使用している。すなわち、 $1-xy$ が単元でないとする。すると命題
+1.5より単元でない全ての元はある極大イデアルに含まれることになる。ある
+極大イデアルを $\mathfrak{m}$ とする。また、Jacobson根基
+$\mathfrak{R}$ は全ての極大イデアルの共通部分として定義されるため、必
+然的に $x \in \mathfrak{R} \subseteq \mathfrak{m}$ となる。イデアルの
+性質より、 $xy \in \mathfrak{m}$ である。そうすると、 $1-xy$ の $xy$
+がイデアルの元になり、 $1$ もイデアル $\mathfrak{m}$ の元とならなけれ
+ばならない。しかし、そうすると $\mathfrak{m}$ は単項イデアル $(1)$ に
+なるため極大イデアルではなくなってしまう。これは矛盾である。
+

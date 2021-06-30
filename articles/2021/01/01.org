@@ -1,0 +1,7 @@
+#+BLOG: wordpress
+#+POSTID: 133
+#+DATE: [2021-01-01 金 20:28]
+#+TITLE: rxjs を勉強
+
+[[https://www.learnrxjs.io/][Introduction - Learn RxJS]] を参考に rxjs を勉強中。仕事で angular を使
+用したフロントエンド開発があるため、理解しながらコーディングをやりたい。

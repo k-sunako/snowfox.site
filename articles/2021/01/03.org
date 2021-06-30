@@ -1,0 +1,92 @@
+#+BLOG: wordpress
+#+POSTID: 143
+#+BLOG: wordpress
+
+#+DATE: [2021-01-03 日 12:19]
+#+TITLE: emacs で音楽を聞く
+
+* 概要
+  [[https://musicforprogramming.net/][musicForProgramming]] のmp3ファイルをemacsで再生できないかをあれこれと
+  試行錯誤したのでその備忘録として。
+  
+* パッケージ
+  [[https://www.emacswiki.org/emacs/MusicPlayers][Music Players]] にあるようにいくつかのパッケージがあるが ~emms~
+  を選択。
+
+* カスタム
+  ~customize-group~ コマンドで /emms-volume/ で
+  ~emms-volume-change-function~ に /emms-volume-pulse-change/ を設定。
+
+* エラー
+  mp3 を追加してボリュームを上げようとすると以下のメッセージがミニバッ
+  ファーに表示される。
+
+  #+begin_src text
+    Wrong type argument: stringp, nil
+  #+end_src
+
+* 原因
+  *emms-volume-pulse.el* の ~pactl~ の出力をパースするところが問題。コー
+  ドではSink, Name, Volume を目印として情報を取得しているようで、コマ
+  ンド出力が英語以外だと問題となる。
+
+  #+begin_src emacs-lisp
+                 (string-match
+                  (mapconcat 'identity
+                         '(".*Sink[ \t]+\\#\\([0-9]+\\)"
+                           ".*Name:[ \t]\\([^\n]+\\)"
+                           ".*Volume:.*?\\([0-9]+\\)%.*\n?")
+                         "\n")
+                  output)
+  #+end_src
+
+  コード内の ~pactl~ コマンドを再現すると日本語表示になっている。
+
+  #+begin_src shell
+    pactl list sinks 
+  #+end_src
+  
+  #+begin_src text
+    シンク #0
+        状態: RUNNING
+        名前: alsa_output.pci-0000_00_01.1.hdmi-stereo-extra1
+        説明: 内部オーディオ Digital Stereo (HDMI 2)
+        ドライバー: module-alsa-card.c
+        サンプル仕様: s16le 2ch 44100Hz
+        チャンネルマップ: front-left,front-right
+        所有者モジュール: 6
+        ミュート: いいえ
+        ボリューム: front-left: 39321 /  60% / -13.31 dB,   front-right: 39321 /  60% / -13.31 dB
+  #+end_src
+
+  ロケールを設定すると英語で表示される。
+
+  #+begin_src shell
+    LC_ALL=C pactl list sinks 
+  #+end_src
+  
+  #+begin_src text
+    Sink #0
+        State: RUNNING
+        Name: alsa_output.pci-0000_00_01.1.hdmi-stereo-extra1
+        Description: 内部オーディオ Digital Stereo (HDMI 2)
+        Driver: module-alsa-card.c
+        Sample Specification: s16le 2ch 44100Hz
+        Channel Map: front-left,front-right
+        Owner Module: 6
+        Mute: no
+        Volume: front-left: 39321 /  60% / -13.31 dB,   front-right: 39321 /  60% / -13.31 dB
+  #+end_src
+
+* 対策
+
+  ~defadvice~ を使用して問題の関数の環境変数を一時的に置換して問題を回
+  避。
+
+  #+begin_src emacs-lisp
+    (defadvice emms-volume--pulse-get-volume
+        (around emms-volume--pulse-get-volume-around activate)
+      (let ((process-environment (append process-environment '("LC_ALL=C"))))
+        ad-do-it))
+  #+end_src
+  
