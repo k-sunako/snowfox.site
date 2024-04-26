@@ -1,0 +1,70 @@
+#+BLOG: wordpress
+#+POSTID: 313
+#+LaTeX_CLASS: koma-jarticle
+
+#+STARTUP:  overview
+#+STARTUP:  hidestars
+#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+LINK_UP:
+#+LINK_HOME:
+
+#+cite_export: csl ~/repos/styles/chicago-author-date.csl
+#+BIBLIOGRAPHY: ~/myspace/Bibliography/references.bib
+
+#+TITLE: ミュンヒハウゼン数
+#+AUTHOR: k-sunako
+#+DATE: [2024-03-18 月 16:43]
+
+#+PROPERTY: header-args:python :session (concat "*python* - " (buffer-file-name))
+#+PROPERTY: header-args:python+ :var cur_dir=(identity default-directory)
+#+PROPERTY: header-args:python+ :eval no-export
+
+#+begin_src elisp :exports none
+  (setq-local org-babel-python-command "/home/snowfox/repos/ks_python_env/.venv/bin/python")
+#+end_src
+
+#+RESULTS:
+: /home/snowfox/repos/ks_python_env/.venv/bin/python
+
+
+* 概要
+[cite:@数学セミナー編集部2024-03-12] でミュンヒハウゼン数を知ったので計算してみた。
+
+* コード
+
+#+begin_src python :results output :exports both
+  import itertools
+  import functools
+
+  @lru_cache(maxsize=1000)
+  def _calc(i, ind):
+      return i * (10**ind)
+
+  def Munchhausen(n_digits=4):
+      ret = []
+      
+      values = [(i, i**i) for i in range(1, 10)]
+      for x in itertools.product(*[values]*n_digits):
+          a = 0
+          b = 0
+          for ind, (i, iv) in enumerate(x):
+              a += _calc(i, ind)
+              b += iv
+          if a == b:
+              ret.append(a)
+      return ret
+
+  for i in range(1, 7):
+      print(i, Munchhausen(i))
+#+end_src
+
+#+RESULTS:
+: 1 [1]
+: 2 []
+: 3 []
+: 4 [3435]
+: 5 []
+: 6 []
+
+* 参考文献
+#+print_bibliography:

@@ -1,0 +1,99 @@
+#+BLOG: wordpress
+#+POSTID: 308
+#+LaTeX_CLASS: koma-jarticle
+
+#+STARTUP:  overview
+#+STARTUP:  hidestars
+#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+LINK_UP:
+#+LINK_HOME:
+
+#+cite_export: csl ~/repos/styles/chicago-author-date.csl
+#+BIBLIOGRAPHY: ~/myspace/Bibliography/references.bib
+
+#+TITLE:  ラゲール法による多項式の求解
+#+AUTHOR: k-sunako
+#+DATE: [2024-03-07 木 18:30]
+
+#+PROPERTY: header-args:python :session (concat "*python* - " (buffer-file-name))
+#+PROPERTY: header-args:python+ :var cur_dir=(identity default-directory)
+#+PROPERTY: header-args:python+ :eval no-export
+
+#+begin_src elisp :exports none
+  (setq-local org-babel-python-command "/home/snowfox/repos/ks_python_env/.venv/bin/python"))
+#+end_src
+
+#+RESULTS:
+: /home/snowfox/repos/ks_python_env/.venv/bin/python
+
+
+
+* 概要
+[cite:@長田直樹2024-01-23] の第4章代数方程式:1ラゲール法をもとに実装する。以下のサイトも参考にした。
+1. [[https://lascode.com/laguerre-method/][ラゲール法による求根アルゴリズム～Pythonコード付き～ - LASCODE]]
+
+* 方針
+根 1, 2, 3, 4, 5 を持つ5次の多項式を解くことにする.
+
+#+begin_src python :results output :exports both
+  import numpy as np
+
+  p5deg = np.polynomial.polynomial.Polynomial.fromroots([1, 2, 3, 4, 5])
+  print(p5deg)
+#+end_src
+
+#+RESULTS:
+: -120.0 + 274.0·x - 225.0·x² + 85.0·x³ - 15.0·x⁴ + 1.0·x⁵
+
+* 実装
+
+#+begin_src python
+  def laguerre(f, x0, delta=0.01, max_iter=100):
+      ans = []
+      
+      f = f.copy()
+      while 1 < f.degree():
+          n = f.degree()
+          df = f.deriv()
+          ddf = df.deriv()
+
+          x = x0
+          iter = 0
+          while not (np.abs(f(x)) < delta):
+              numerator = n * f(x)
+              denom_plus = df(x) + np.sqrt((n-1)**2 * df(x)**2 - n*(n-1)*f(x)*ddf(x))
+              denom_minus = df(x) - np.sqrt((n-1)**2 * df(x)**2 - n*(n-1)*f(x)*ddf(x))
+
+              denominator = denom_plus if np.abs(denom_minus) < np.abs(denom_plus) else denom_minus
+              x -= numerator / denominator
+
+              if np.abs(f(x)) < delta:
+                  break
+              if max_iter < iter:
+                  break
+              iter += 1
+
+          ans.append(x)
+          f = f // np.polynomial.polynomial.Polynomial.fromroots([x])
+
+      if f.degree() == 1:
+          ans.append(-f.coef[0])
+      return ans
+#+end_src
+
+#+RESULTS:
+: None
+
+* 検証
+5つの根の近似値が得られた。
+
+#+begin_src python :results output :exports both
+  roots = laguerre(p5deg, x0=0, delta=0.00001)
+  print(roots)
+#+end_src
+
+#+RESULTS:
+: [1.0000000000000002, 1.9999999999999907, 3.0000000000000107, 4.000000000000017, 4.999999999999981]
+
+* 参考文献
+#+print_bibliography:

@@ -1,0 +1,71 @@
+#+BLOG: wordpress
+#+POSTID: 319
+#+LaTeX_CLASS: koma-jarticle
+
+#+STARTUP:  overview
+#+STARTUP:  hidestars
+#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+LINK_UP:
+#+LINK_HOME:
+
+#+cite_export: csl ~/repos/styles/chicago-author-date.csl
+#+BIBLIOGRAPHY: ~/myspace/Bibliography/references.bib
+
+#+TITLE: 複素関数の挙動について
+#+AUTHOR: k-sunako
+#+DATE: [2024-03-30 土 14:18]
+
+#+PROPERTY: header-args:python :session (concat "*python* - " (buffer-file-name))
+#+PROPERTY: header-args:python+ :var cur_dir=(identity default-directory)
+#+PROPERTY: header-args:python+ :eval no-export
+
+#+begin_src elisp :exports none
+  (setq-local org-babel-python-command "/home/snowfox/repos/ks_python_env/.venv/bin/python")
+#+end_src
+
+#+RESULTS:
+: /home/snowfox/repos/ks_python_env/.venv/bin/python
+
+
+* 概要
+[cite:@森正武2003-05-22] の 第3章の複素変数の初等関数のプロットを実際
+にやってみる。
+
+
+* 複素関数のプロット
+
+#+begin_src python :results file :var ofile="images/ed9ktsxznLcGi.png" :exports both
+  import numpy as np
+  import matplotlib.pyplot as plt
+
+  def plot(in_curves, func):
+      f, (ax1, ax2) = plt.subplots(1, 2)
+      ax1.axis('equal')
+      ax2.axis('equal')
+      for crv in in_curves:
+          ax1.plot(crv.real, crv.imag)
+          y = func(crv)
+          ax2.plot(y.real, y.imag)
+          
+  in_curves = []
+  N = 10
+  for i in range(N):
+      crv = np.linspace(-2, 2, 100)  + 1j * (-3*np.pi + i * (3*np.pi-(-3*np.pi)) / N)
+      in_curves.append(crv)
+  for i in range(N):
+      crv = -2 + i * (2 - (-2)) / N + 1j * np.linspace(-3*np.pi, 3*np.pi, 100)
+      in_curves.append(crv)
+  print(in_curves)
+  plt.cla()
+  plot(in_curves, np.exp)
+  plt.savefig(ofile)
+  ofile
+#+end_src
+
+#+RESULTS:
+[[file:images/ed9ktsxznLcGi.png]]
+
+* 参考文献
+#+print_bibliography:
+
+# images/ed9ktsxznLcGi.png https://snowfox.site/wp-content/uploads/2024/03/ed9ktsxznLcGi.png

@@ -1,0 +1,76 @@
+#+BLOG: wordpress
+#+POSTID: 316
+#+LaTeX_CLASS: koma-jarticle
+
+#+STARTUP:  overview
+#+STARTUP:  hidestars
+#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+LINK_UP:
+#+LINK_HOME:
+
+#+cite_export: csl ~/repos/styles/chicago-author-date.csl
+#+BIBLIOGRAPHY: ~/myspace/Bibliography/references.bib
+
+#+TITLE: ironcladでハッシュ関数MD5を使ってみる
+#+AUTHOR: k-sunako
+#+DATE: [2024-03-20 水 16:48]
+
+* 概要
+[[https://github.com/sharplispers/ironclad][sharplispers/ironclad: A cryptographic toolkit written in Common Lisp]] でハッシュ関数MD5を使ってみた。
+
+
+
+* コード
+
+#+begin_src elisp :exports none
+   (setq org-babel-lisp-eval-fn #'sly-eval)
+#+end_src
+
+~quicklisp~ で ~ironclad~ をインストールする。
+#+begin_src lisp
+  (ql:quickload "ironclad")
+#+end_src
+
+文字列をバイト配列に変換する関数とバイト配列を16進数表記にする関数を定義する。
+
+#+begin_src lisp
+  (defun plain2bytes (message)
+    (sb-ext:string-to-octets message  :external-format :utf-8))
+
+  (defun bytes2hexstr (bytes)
+    (reduce (lambda (x y) (format nil "~x~x" x y)) bytes :initial-value ""))
+#+end_src
+
+#+RESULTS:
+: BYTES2HEXSTR
+
+~ironclad~ の doc/ironclad.html を参考ハッシュ関数MD5を呼び出す。
+
+#+begin_src lisp :exports both
+  (let* ((message "hello!"))
+    (bytes2hexstr (ironclad:digest-sequence :md5 (plain2bytes message))))
+#+end_src
+
+#+RESULTS:
+: 5A8DD3AD756A93DED72B823B19DD877
+
+* 検証
+
+[[https://datatracker.ietf.org/doc/html/rfc1321#appendix-A.5][RFC 1321 - The MD5 Message-Digest Algorithm]] の"A.5 Test suite"を参照し
+て、正しく呼び出せているか確認する。
+
+#+begin_quote
+MD5 ("message digest") = f96b697d7cb7938d525a2f31aaf161d0
+#+end_quote
+
+#+begin_src lisp :exports both
+  (let* ((message "message digest"))
+    (bytes2hexstr (ironclad:digest-sequence :md5 (plain2bytes message))))
+#+end_src
+
+#+RESULTS:
+: F96B697D7CB7938D525A2F31AAF161D0
+
+
+* 参考文献
+#+print_bibliography:

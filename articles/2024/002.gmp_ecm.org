@@ -1,0 +1,122 @@
+#+BLOG: wordpress
+#+POSTID: 311
+#+LaTeX_CLASS: koma-jarticle
+
+#+STARTUP:  overview
+#+STARTUP:  hidestars
+#+OPTIONS:  H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+LINK_UP:
+#+LINK_HOME:
+
+#+cite_export: csl ~/repos/styles/chicago-author-date.csl
+#+BIBLIOGRAPHY: ~/myspace/Bibliography/references.bib
+
+#+TITLE: GMP_ECMによる素因数分解
+#+AUTHOR: k-sunako
+#+DATE: [2024-03-09 土 17:12]
+
+
+#+PROPERTY: header-args:python :session (concat "*python* - " (buffer-file-name))
+#+PROPERTY: header-args:python+ :var cur_dir=(identity default-directory)
+#+PROPERTY: header-args:python+ :eval no-export
+
+#+begin_src elisp :exports none
+  (setq-local org-babel-python-command "/home/snowfox/repos/ks_python_env/.venv/bin/python")
+#+end_src
+
+#+RESULTS:
+: /home/snowfox/repos/ks_python_env/.venv/bin/python
+
+* 概要
+[cite:@岩波書店科学編集部2024-02-22] にあった"RSAと素因数分解"に ~GMP-ECM~
+が紹介されていたので、実際に動かしてみた。
+
+* GMP-ECMの準備
+
+[[https://gitlab.inria.fr/zimmerma/ecm][ZIMMERMANN Paul / ecm · GitLab]] を利用した。
+
+#+begin_src bash
+  git clone https://gitlab.inria.fr/zimmerma/ecm.git
+#+end_src
+
+~INSTALL.dev~ にある記載のように実行して、コンパイルした。
+
+#+begin_src bash
+  cd ecm
+  autoreconf -i
+  ./configure
+  make -j4
+  make check
+#+end_src
+
+コンパイル後に実行ファイル ~ecm~ がフォルダに生成されている。
+
+* 素数の生成
+
+2つの素数を生成して、素因数分解のための合成数を用意する。
+
+#+begin_src python :results output :exports both
+  import sympy
+
+  N = 100
+  p1 = sympy.randprime(2**(N+1), 2**(N+2))
+  p2 = sympy.randprime(2**(N+1), 2**(N+2))
+
+  print(f'{p1=}')
+  print(f'{p2=}')
+  print(f'{p1*p2=}')
+#+end_src
+
+#+RESULTS:
+: p1=2869069113607969685726929882709
+: p2=3871722605512470843352197003061 
+: p1*p2=11108239743933603608670116823884965417896735085597594043972249
+
+2つの素数p1, p2から合成数: 11108239743933603608670116823884965417896735085597594043972249 を得た。
+
+* 実行
+
+[[https://stdkmd.net/nrr/ecm_ja.htm#USAGE][GMP-ECM の使い方]] の USAGE を参考にコマンドのオプションの引数を決定した。
+未知の素因数の桁数が30桁なので表から以下の値を採用した。
++ -c(反復): 500
++ B1: 250000
+
+結果の最後部をみると、合成数が元の2つの素数に分解されていることが分る。
+
+#+begin_src bash
+    echo 11108239743933603608670116823884965417896735085597594043972249 | ./ecm -c 500 250000
+#+end_src
+
+#+begin_src text
+  GMP-ECM 7.0.6-dev [configured with GMP 6.3.0, --enable-asm-redc, --enable-assert] [ECM]
+  Input number is 11108239743933603608670116823884965417896735085597594043972249 (62 digits)
+  Using B1=250000, B2=128992510, polynomial Dickson(3), sigma=1:4010257250
+  Step 1 took 77ms
+  Step 2 took 70ms
+  Run 2 out of 500:
+  Using B1=250000, B2=128992510, polynomial Dickson(3), sigma=1:2451171661
+  Step 1 took 70ms
+  Step 2 took 69ms
+  Run 3 out of 500:
+  Using B1=250000, B2=128992510, polynomial Dickson(3), sigma=1:2557109986
+  Step 1 took 70ms
+  Step 2 took 69ms
+
+  ...
+
+  Run 18 out of 500:
+  Using B1=250000, B2=128992510, polynomial Dickson(3), sigma=1:504643144
+  Step 1 took 70ms
+  Step 2 took 70ms
+  Run 19 out of 500:
+  Using B1=250000, B2=128992510, polynomial Dickson(3), sigma=1:2975852467
+  Step 1 took 70ms
+  Step 2 took 71ms
+  ********** Factor found in step 2: 2869069113607969685726929882709
+  Found prime factor of 31 digits: 2869069113607969685726929882709
+  Prime cofactor 3871722605512470843352197003061 has 31 digits
+#+end_src
+
+
+* 参考文献
+#+print_bibliography:
